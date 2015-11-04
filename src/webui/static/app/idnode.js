@@ -1615,8 +1615,8 @@ tvheadend.idnode_grid = function(panel, conf)
                 alt: true,
                 stopEvent: true,
                 fn: function() {
-					// This shifts focus to the text box (i.e. the x in "Page x of y")
-					// Feels like a hack
+                    // This shifts focus to the text box (i.e. the x in "Page x of y")
+                    // Feels like a hack
                     page.items.items[4].focus(true);
                     }
             } , {
@@ -1625,8 +1625,8 @@ tvheadend.idnode_grid = function(panel, conf)
                 fn: function() {
                     console.log("EDIT (F2) pressed from ", gconf.stateId);
                     if (grid && abuttons.edit) {
-						// Edit button will be scoped in if a row is selected, so we should
-						// always be good here without a check
+                        // Edit button will be scoped in if a row is selected, so we should
+                        // always be good here without a check
                         abuttons.edit.handler();
                         }
                     }
@@ -1638,8 +1638,8 @@ tvheadend.idnode_grid = function(panel, conf)
                 fn: function() {
                     console.log("EDIT (ctrl+e) pressed from ", gconf.stateId);
                     if (grid && abuttons.edit) {
-						// Edit button will be scoped in if a row is selected, so we should
-						// always be good here without a check
+                        // Edit button will be scoped in if a row is selected, so we should
+                        // always be good here without a check
                         abuttons.edit.handler();
                         }
                     }
@@ -1650,11 +1650,11 @@ tvheadend.idnode_grid = function(panel, conf)
                 fn: function() {
                     console.log("SAVE (ctrl+s) pressed from ", gconf.stateId);
                     if (grid && abuttons.save) {
-						// Check that we have a Save button before triggering
-						// Saves on a 404 AJAX error when we save an unchanged store
-						// This simply relies on the store to know if it's been changed,
-						// which is what scopes in the Undo button anyway.                        
-						if (!abuttons.save.disabled) abuttons.save.handler();
+                        // Check that we have a Save button before triggering
+                        // Saves on a 404 AJAX error when we save an unchanged store
+                        // This simply relies on the store to know if it's been changed,
+                        // which is what scopes in the Undo button anyway.                        
+                        if (!abuttons.save.disabled) abuttons.save.handler();
                         }
                     }
             } , {
@@ -1664,10 +1664,10 @@ tvheadend.idnode_grid = function(panel, conf)
                 fn: function() {
                     console.log("UNDO (ctrl+z) pressed from ", gconf.stateId);
                     if (grid && abuttons.undo) {
-						// Check that we have an Undo button before triggering
-						// Saves on a 404 AJAX error when we save an unchanged store
-						// As 'Save', this simply relies on the store to know if it's been changed,
-						// which is what scopes in the Undo button anyway.
+                        // Check that we have an Undo button before triggering
+                        // Saves on a 404 AJAX error when we save an unchanged store
+                        // As 'Save', this simply relies on the store to know if it's been changed,
+                        // which is what scopes in the Undo button anyway.
                         if (!abuttons.undo.disabled) abuttons.undo.handler();
                         }
                     }
