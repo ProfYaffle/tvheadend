@@ -2082,6 +2082,98 @@ tvheadend.idnode_grid = function(panel, conf)
         });
 
         plugins.push(filter);
+
+        var keymap = new Ext.KeyMap(Ext.getDoc(), [
+            {
+                key: 'a',
+                ctrl: true,
+                stopEvent: true,
+                fn: function() { 
+                    grid.getSelectionModel().selectAll();
+                    }
+            } , {
+// Shift focus to the paging toolbar so we can use the built-in handlers
+// (PagingToolbar.js) for Home, End, PgUp, PgDn and not interfere with the
+// "within page" scrolling
+                key: 'p',
+                alt: true,
+                stopEvent: true,
+                fn: function() {
+                    // This shifts focus to the text box (i.e. the x in "Page x of y")
+                    // Feels like a hack
+                    page.items.items[4].focus(true);
+                    }
+            } , {
+                key: [Ext.EventObject.F2],
+                stopEvent: true,
+                fn: function() {
+                    console.log("EDIT (F2) pressed from ", gconf.stateId);
+                    if (grid && abuttons.edit) {
+                        // Edit button will be scoped in if a row is selected, so we should
+                        // always be good here without a check
+                        abuttons.edit.handler();
+                        }
+                    }
+            } , {
+                // Second handler for Edit - you can't seem to mix modified (ctrl+) and unmodified keys
+                key: 'e',
+                ctrl: true,
+                stopEvent: true,
+                fn: function() {
+                    console.log("EDIT (ctrl+e) pressed from ", gconf.stateId);
+                    if (grid && abuttons.edit) {
+                        // Edit button will be scoped in if a row is selected, so we should
+                        // always be good here without a check
+                        abuttons.edit.handler();
+                        }
+                    }
+            } , {
+                key: 's',
+                ctrl: true,
+                stopEvent: true,
+                fn: function() {
+                    console.log("SAVE (ctrl+s) pressed from ", gconf.stateId);
+                    if (grid && abuttons.save) {
+                        // Check that we have a Save button before triggering
+                        // Saves on a 404 AJAX error when we save an unchanged store
+                        // This simply relies on the store to know if it's been changed,
+                        // which is what scopes in the Undo button anyway.                        
+                        if (!abuttons.save.disabled) abuttons.save.handler();
+                        }
+                    }
+            } , {
+                key: 'z',
+                ctrl: true,
+                stopEvent: true,
+                fn: function() {
+                    console.log("UNDO (ctrl+z) pressed from ", gconf.stateId);
+                    if (grid && abuttons.undo) {
+                        // Check that we have an Undo button before triggering
+                        // Saves on a 404 AJAX error when we save an unchanged store
+                        // As 'Save', this simply relies on the store to know if it's been changed,
+                        // which is what scopes in the Undo button anyway.
+                        if (!abuttons.undo.disabled) abuttons.undo.handler();
+                        }
+                    }
+            } , {
+                key: Ext.EventObject.DELETE,
+                stopEvent: true,
+                fn: function() {
+                    console.log("DEL pressed from ", gconf.stateId);
+                    // We always have a Delete button
+                    if (grid && abuttons.del) abuttons.del.handler();
+                    }
+            } , {
+                key: Ext.EventObject.INSERT,
+                stopEvent: true,
+                fn: function() {
+                    console.log("INS pressed from ", gconf.stateId);
+                    // We always have an Add button
+                    if (grid && abuttons.add) abuttons.add.handler();
+                    }
+                }
+            ]);
+
         var gconf = {
             stateful: true,
             stateId: conf.gridURL || conf.url,
@@ -2093,14 +2185,7 @@ tvheadend.idnode_grid = function(panel, conf)
             viewConfig: {
                 forceFit: true
             },
-            keys: {
-                key: 'a',
-                ctrl: true,
-                stopEvent: true,
-                handler: function() {
-                    grid.getSelectionModel().selectAll();
-                }
-            },
+            keys: keymap,
             tbar: buttons,
             bbar: page
         };
