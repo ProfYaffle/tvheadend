@@ -223,6 +223,7 @@ static int _eit_desc_short_event
   } else if ( r > 1 ) {
     if (!ev->title) ev->title = lang_str_create();
     lang_str_add(ev->title, buf, lang);
+    tvhtrace(LS_TBL_EIT, "decoded title '%s' (%i)", buf, ((eit_private_t *)((epggrab_module_ota_t *)mod)->opaque)->conv);
   }
 
   len -= r;
